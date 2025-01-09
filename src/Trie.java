@@ -45,6 +45,26 @@ public class Trie {
                 return false;
             }
         }
+        return false;
+    }
+
+    public boolean isValidPrefix(String word) {
+        TrieNode currentNode = root;
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+
+            if (currentNode.getChildren()[c] != null) {
+                // Word is so far in the dictionary
+                currentNode = currentNode.getChildren()[currentNode.getChildren()[c].getLetter()];
+                if (i == word.length() - 1) {
+                    // If the end of the word isn't the end of any words in the dictionary
+                    return true;
+                }
+            } else {
+                // Word is not in the dictionary
+                return false;
+            }
+        }
         return true;
     }
 }
