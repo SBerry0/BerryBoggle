@@ -1,4 +1,4 @@
-// Trie.java by Sohum Berry from SpellCheck
+// Trie.java by Sohum Berry edited from SpellCheck
 public class Trie {
     TrieNode root;
 
@@ -49,6 +49,7 @@ public class Trie {
     }
 
     public boolean isValidPrefix(String word) {
+        // Returns true if the given string appears in the Trie at all
         TrieNode currentNode = root;
         for (int i = 0; i < word.length(); i++) {
             char c = word.charAt(i);
@@ -57,7 +58,7 @@ public class Trie {
                 // Word is so far in the dictionary
                 currentNode = currentNode.getChildren()[currentNode.getChildren()[c].getLetter()];
                 if (i == word.length() - 1) {
-                    // If the end of the word isn't the end of any words in the dictionary
+                    // The word exists; status of the square doesn't matter
                     return true;
                 }
             } else {
@@ -65,6 +66,24 @@ public class Trie {
                 return false;
             }
         }
+        // Empty string counts as a valid prefix
         return true;
+    }
+
+    public void removeWord(String word) {
+        TrieNode currentNode = root;
+        for (int i = 0; i < word.length(); i++) {
+            char c = word.charAt(i);
+
+            if (currentNode.getChildren()[c] != null) {
+                // Word is so far in the dictionary
+                currentNode = currentNode.getChildren()[currentNode.getChildren()[c].getLetter()];
+                if (i == word.length() - 1) {
+                    // Set the found word to false in order to remove it from the dictionary
+                    currentNode.setWordEnd(false);
+                    // If no word is found, do nothing
+                }
+            }
+        }
     }
 }
